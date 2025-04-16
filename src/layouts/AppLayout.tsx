@@ -1,13 +1,20 @@
 import { Outlet } from "react-router-dom";
 import { Header } from "../components/Header";
+import { Sidebar } from "../components/Sidebar";
 
 export function AppLayout() {
   return (
-    <div className="min-h-screen">
+    <div className="h-screen flex flex-col bg-background">
       <Header />
-      <main className="px-8 py-4 bg-background">
-        <Outlet />
-      </main>
+
+      <div className="px-8 flex-grow flex py-4">
+        <aside className="lg:w-1/5 hidden lg:block">
+          <Sidebar />
+        </aside>
+        <main className="p-4 flex-grow">
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 }
