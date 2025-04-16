@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { AppLayout } from "./layouts/app";
+import { AppLayout } from "./layouts/AppLayout";
 import { Dashboard } from "./pages/dashboard";
 import { Budget } from "./pages/budget";
 import { Transactions } from "./pages/transactions";
