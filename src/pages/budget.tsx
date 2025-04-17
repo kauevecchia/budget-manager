@@ -4,6 +4,20 @@ import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
 import { DollarSign } from "lucide-react";
 
+function formatCurrency(value: number) {
+  return value.toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 2,
+  });
+}
+
+function parseCurrency(input: string | number) {
+  const str = String(input);
+  const numeric = str.replace(/\D/g, "");
+  return Number(numeric) / 100;
+}
+
 export function Budget() {
   const { control } = useForm();
 
@@ -19,9 +33,22 @@ export function Budget() {
             name="budget"
             control={control}
             defaultValue={0}
-            render={({ field }) => (
-              <Input type="number" placeholder="Enter budget" {...field} />
-            )}
+            render={({ field }) => {
+              const formatted =
+                field.value === 0 ? "" : formatCurrency(field.value);
+
+              return (
+                <Input
+                  type="text"
+                  placeholder="Enter amount (e.g. $1,000.00)"
+                  value={formatted}
+                  onChange={(e) => {
+                    const raw = parseCurrency(e.target.value);
+                    field.onChange(raw);
+                  }}
+                />
+              );
+            }}
           />
         </div>
 
