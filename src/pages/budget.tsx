@@ -3,6 +3,9 @@ import { Label } from "@radix-ui/react-label";
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
 import { DollarSign } from "lucide-react";
+import { budgetFormSchema } from "../schemas/budgetForm";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 function formatCurrency(value: number) {
   return value.toLocaleString("en-US", {
@@ -18,14 +21,25 @@ function parseCurrency(input: string | number) {
   return Number(numeric) / 100;
 }
 
+type BudgetFormInputs = z.infer<typeof budgetFormSchema>;
+
 export function Budget() {
-  const { control } = useForm();
+  const { control, handleSubmit } = useForm<BudgetFormInputs>({
+    resolver: zodResolver(budgetFormSchema),
+  });
+
+  function onSubmit(data: BudgetFormInputs) {
+    console.log("Submitted data:", data);
+  }
 
   return (
     <div className="flex flex-col gap-6">
       <h1 className="text-3xl font-semibold">Your Budget</h1>
 
-      <form className="flex flex-col gap-4 w-full md:w-1/2 p-4">
+      <form
+        onSubmit={() => handleSubmit(onSubmit)}
+        className="flex flex-col gap-4 w-full md:w-1/2 p-4"
+      >
         <div className="flex flex-col gap-2">
           <Label>Set your current budget</Label>
 
