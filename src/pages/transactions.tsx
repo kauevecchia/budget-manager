@@ -7,15 +7,32 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../components/ui/select";
+import { z } from "zod";
+import { transactionFormSchema } from "../schemas/transactionForm";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { Button } from "../components/ui/button";
 import { CircleArrowRight } from "lucide-react";
 
+type TransactionFormInput = z.infer<typeof transactionFormSchema>;
+
+function onSubmit(data: TransactionFormInput) {
+  console.log(data);
+}
+
 export function Transactions() {
+  const { handleSubmit } = useForm<TransactionFormInput>({
+    resolver: zodResolver(transactionFormSchema),
+  });
+
   return (
     <div className="flex flex-col gap-6">
       <h1 className="text-3xl font-semibold">Transactions</h1>
 
-      <form className="flex flex-col gap-3 p-4 md:w-1/2">
+      <form
+        className="flex flex-col gap-3 p-4 md:w-1/2"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <div className="flex flex-col gap-1">
           <Label htmlFor="transaction-type">Transaction Type</Label>
           <Select defaultValue="income">
