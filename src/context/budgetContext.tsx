@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useState } from "react";
 
 type Transaction = {
-  id: string;
+  id: number;
   description: string;
   amount: number;
   operation: "expense" | "income";
@@ -25,7 +25,7 @@ export function BudgetProvider({ children }: BudgetProviderProps) {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [budget, setBudget] = useState(0);
 
-  function removeTransaction(id: string) {
+  function removeTransaction(id: number) {
     setTransactions((prev) =>
       prev.filter((transaction) => transaction.id !== id)
     );
