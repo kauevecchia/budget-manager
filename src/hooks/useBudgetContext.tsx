@@ -13,5 +13,9 @@ export function useBudgetContext() {
     addTransaction(transaction);
   };
 
+  const handleSetBudget = (budget: number) => {
+    setBudget(budget);
+  };
+
   return {};
 }
