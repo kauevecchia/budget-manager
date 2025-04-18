@@ -23,6 +23,7 @@ interface BudgetProviderProps {
 
 export function BudgetProvider({ children }: BudgetProviderProps) {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [budget, setBudget] = useState(0);
 
   function removeTransaction(id: string) {
     setTransactions((prev) =>
