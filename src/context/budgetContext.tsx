@@ -1,10 +1,10 @@
-import { createContext, ReactNode } from "react";
+import { createContext, ReactNode, useState } from "react";
 
 type Transaction = {
   id: string;
   description: string;
   amount: number;
-  transaction: "expense" | "income";
+  operation: "expense" | "income";
 };
 
 interface BudgetContextType {
@@ -12,7 +12,7 @@ interface BudgetContextType {
   setBudget: (budget: number) => void;
   transactions: Transaction[];
   addTransaction: (transaction: Transaction) => void;
-  removeTransaction: (index: number) => void;
+  removeTransaction: (id: number) => void;
 }
 
 export const BudgetContext = createContext({} as BudgetContextType);
@@ -22,6 +22,14 @@ interface BudgetProviderProps {
 }
 
 export function BudgetProvider({ children }: BudgetProviderProps) {
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+
+  function removeTransaction(id: string) {
+    setTransactions((prev) =>
+      prev.filter((transaction) => transaction.id !== id)
+    );
+  }
+
   return (
     <BudgetContext.Provider
       value={{
