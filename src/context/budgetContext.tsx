@@ -30,6 +30,10 @@ export function BudgetProvider({ children }: BudgetProviderProps) {
     );
   }
 
+  function addTransaction(transaction: Transaction) {
+    setTransactions((prev) => [...prev, transaction]);
+  }
+
   return (
     <BudgetContext.Provider
       value={{
