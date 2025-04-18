@@ -10,9 +10,10 @@ import {
 import { z } from "zod";
 import { transactionFormSchema } from "../schemas/transactionForm";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { Button } from "../components/ui/button";
 import { CircleArrowRight } from "lucide-react";
+import { formatCurrency, parseCurrency } from "../utils/currency";
 
 type TransactionFormInput = z.infer<typeof transactionFormSchema>;
 
@@ -21,7 +22,7 @@ function onSubmit(data: TransactionFormInput) {
 }
 
 export function Transactions() {
-  const { handleSubmit } = useForm<TransactionFormInput>({
+  const { control, handleSubmit } = useForm<TransactionFormInput>({
     resolver: zodResolver(transactionFormSchema),
   });
 
@@ -55,10 +56,27 @@ export function Transactions() {
         </div>
         <div className="flex flex-col gap-1">
           <Label htmlFor="amount">Amount</Label>
-          <Input
-            type="text"
-            id="budget"
-            placeholder="Enter amount (e.g. $250,00)"
+          <Controller
+            name="amount"
+            control={control}
+            defaultValue={0}
+            render={({ field }) => {
+              const formatted =
+                field.value === 0 ? "" : formatCurrency(field.value);
+
+              return (
+                <Input
+                  type="text"
+                  id="budget"
+                  placeholder="Enter amount (e.g. $250,00)"
+                  value={formatted}
+                  onChange={(e) => {
+                    const raw = parseCurrency(e.target.value);
+                    field.onChange(raw);
+                  }}
+                />
+              );
+            }}
           />
         </div>
 
