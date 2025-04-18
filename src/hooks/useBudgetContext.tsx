@@ -17,5 +17,11 @@ export function useBudgetContext() {
     setBudget(budget);
   };
 
-  return {};
+  return {
+    budget,
+    transactions,
+    handleSetBudget,
+    handleAddTransaction,
+    handleRemoveTransaction,
+  };
 }
