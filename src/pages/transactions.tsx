@@ -1,18 +1,29 @@
+import { useForm, Controller } from "react-hook-form";
 import { Button } from "../components/ui/button";
 import { CircleArrowRight } from "lucide-react";
+import { useBudgetContext } from "../hooks/useBudgetContext";
 import { formatCurrency, parseCurrency } from "../utils/currency";
-import { Label } from "../components/ui/label";
-import { Controller } from "react-hook-form";
+import { Label } from "@radix-ui/react-label";
 import { Input } from "../components/ui/input";
 import {
   Select,
-  SelectContent,
-  SelectItem,
   SelectTrigger,
   SelectValue,
+  SelectContent,
+  SelectItem,
 } from "../components/ui/select";
+import { transactionFormSchema } from "../schemas/transactionForm";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+
+type TransactionFormInput = z.infer<typeof transactionFormSchema>;
 
 export function Transactions() {
+  const { handleAddTransaction } = useBudgetContext();
+  const { control, handleSubmit, reset } = useForm<TransactionFormInput>({
+    resolver: zodResolver(transactionFormSchema),
+  });
+
   return (
     <div className="flex flex-col gap-6">
       <h1 className="text-3xl font-semibold">Transactions</h1>
