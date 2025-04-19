@@ -1,11 +1,6 @@
 import { createContext, ReactNode, useState } from "react";
-
-export type Transaction = {
-  id: number;
-  description: string;
-  amount: number;
-  operation: "expense" | "income";
-};
+import { Transaction } from "../types/transactions";
+import { addNewRowToSheet } from "../utils/sheets";
 
 interface BudgetContextType {
   budget: number;
@@ -31,18 +26,28 @@ export function BudgetProvider({ children }: BudgetProviderProps) {
     );
   }
 
-  function addTransaction(transaction: Transaction) {
-    setTransactions((prev) => [...prev, transaction]);
+  async function addTransaction(transaction: Transaction) {
+    try {
+      await addNewRowToSheet({
+        type: transaction.type,
+        description: transaction.description,
+        amount: transaction.amount,
+      });
+
+      setTransactions((prev) => [...prev, transaction]);
+    } catch (err) {
+      console.error("Erro ao adicionar transação na planilha:", err);
+    }
   }
 
   return (
     <BudgetContext.Provider
       value={{
-        budget: 0,
-        setBudget: () => {},
-        transactions: [],
-        addTransaction: () => {},
-        removeTransaction: () => {},
+        budget,
+        setBudget,
+        transactions,
+        addTransaction,
+        removeTransaction,
       }}
     >
       {children}

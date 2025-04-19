@@ -6,25 +6,16 @@ import { DollarSign } from "lucide-react";
 import { budgetFormSchema } from "../schemas/budgetForm";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-function formatCurrency(value: number) {
-  return value.toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 2,
-  });
-}
-
-function parseCurrency(input: string | number) {
-  const str = String(input);
-  const numeric = str.replace(/\D/g, "");
-  return Number(numeric) / 100;
-}
+import { formatCurrency, parseCurrency } from "../utils/currency";
 
 type BudgetFormInputs = z.infer<typeof budgetFormSchema>;
 
 export function Budget() {
-  const { control, handleSubmit } = useForm<BudgetFormInputs>({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<BudgetFormInputs>({
     resolver: zodResolver(budgetFormSchema),
   });
 
@@ -37,11 +28,11 @@ export function Budget() {
       <h1 className="text-3xl font-semibold">Your Budget</h1>
 
       <form
-        onSubmit={() => handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-4 w-full md:w-1/2 p-4"
       >
         <div className="flex flex-col gap-2">
-          <Label>Set your current budget</Label>
+          <Label htmlFor="budget">Set your current budget</Label>
 
           <Controller
             name="budget"
@@ -54,6 +45,7 @@ export function Budget() {
               return (
                 <Input
                   type="text"
+                  id="budget"
                   placeholder="Enter amount (e.g. $1,000.00)"
                   value={formatted}
                   onChange={(e) => {
@@ -64,6 +56,9 @@ export function Budget() {
               );
             }}
           />
+          {errors.budget && (
+            <p className="text-sm text-red-500">{errors.budget.message}</p>
+          )}
         </div>
 
         <Button className="cursor-pointer max-w-48 text-left">

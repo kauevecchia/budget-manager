@@ -1,5 +1,6 @@
 import { useContext } from "react";
-import { BudgetContext, Transaction } from "../context/budgetContext";
+import { BudgetContext } from "../context/budgetContext";
+import { Transaction } from "../types/transactions";
 
 export function useBudgetContext() {
   const { budget, setBudget, addTransaction, removeTransaction, transactions } =
