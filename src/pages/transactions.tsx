@@ -15,6 +15,7 @@ import {
 import { transactionFormSchema } from "../schemas/transactionForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useNavigate } from "react-router-dom";
 
 type TransactionFormInput = z.infer<typeof transactionFormSchema>;
 
@@ -24,10 +25,28 @@ export function Transactions() {
     resolver: zodResolver(transactionFormSchema),
   });
 
+  const navigate = useNavigate();
+
+  function handleOnSubmit(data: TransactionFormInput) {
+    const newTransaction = {
+      id: Date.now(),
+      type: data.type,
+      description: data.description,
+      amount: data.amount,
+    };
+
+    handleAddTransaction(newTransaction);
+    navigate("/dashboard");
+    reset();
+  }
+
   return (
     <div className="flex flex-col gap-6">
       <h1 className="text-3xl font-semibold">Transactions</h1>
-      <form className="flex flex-col gap-3 p-4 md:w-1/2">
+      <form
+        className="flex flex-col gap-3 p-4 md:w-1/2"
+        onSubmit={handleSubmit(handleOnSubmit)}
+      >
         <div className="flex flex-col gap-1">
           <Label htmlFor="transaction-type">Transaction Type</Label>
           <Controller
