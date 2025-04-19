@@ -1,5 +1,6 @@
 import { Button } from "../components/ui/button";
 import { CircleArrowRight } from "lucide-react";
+import { formatCurrency, parseCurrency } from "../utils/currency";
 import { Label } from "../components/ui/label";
 import { Controller } from "react-hook-form";
 import { Input } from "../components/ui/input";
@@ -58,11 +59,19 @@ export function Transactions() {
             control={control}
             defaultValue={0}
             render={({ field }) => {
+              const formatted =
+                field.value === 0 ? "" : formatCurrency(field.value);
+
               return (
                 <Input
                   type="text"
                   id="budget"
                   placeholder="Enter amount (e.g. $250,00)"
+                  value={formatted}
+                  onChange={(e) => {
+                    const raw = parseCurrency(e.target.value);
+                    field.onChange(raw);
+                  }}
                 />
               );
             }}
