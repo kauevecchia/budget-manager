@@ -2,6 +2,7 @@ import { useEffect, useMemo } from "react";
 import { useBudgetContext } from "../hooks/useBudgetContext";
 import { BudgetPieChart } from "../lib/charts/BudgetPieChart";
 import { BudgetTable } from "../components/BudgetTable";
+import { BudgetProgressBar } from "../components/BudgetProgressBar";
 
 export function Dashboard() {
   const {
@@ -43,7 +44,9 @@ export function Dashboard() {
           </div>
         </main>
       </div>
-      <div></div>
+      <div className="md:max-w-2xl">
+        <BudgetProgressBar />
+      </div>
     </div>
   );
 }
