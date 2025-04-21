@@ -11,6 +11,9 @@ export function useBudgetContext() {
     transactions,
     getCurrentBudget,
     currentBudget,
+    totalIncomes,
+    totalExpenses,
+    calculatedBudget,
   } = useContext(BudgetContext);
 
   const handleRemoveTransaction = (id: number) => {
@@ -37,5 +40,8 @@ export function useBudgetContext() {
     handleRemoveTransaction,
     handleGetCurrentBudget,
     currentBudget,
+    totalIncomes,
+    totalExpenses,
+    calculatedBudget,
   };
 }
