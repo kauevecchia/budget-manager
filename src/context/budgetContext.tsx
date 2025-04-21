@@ -37,10 +37,19 @@ export function BudgetProvider({ children }: BudgetProviderProps) {
 
   const calculatedBudget = budget + totalIncomes - totalExpenses;
 
-  function removeTransaction(id: number) {
+  async function removeTransaction(id: number) {
     setTransactions((prev) =>
       prev.filter((transaction) => transaction.id !== id)
     );
+
+    try {
+      removeRowFromSheet(id);
+    } catch (err) {
+      console.error(
+        "Error while removing transaction from the spreadsheet:",
+        err
+      );
+    }
   }
 
   async function addTransaction(transaction: Transaction) {
