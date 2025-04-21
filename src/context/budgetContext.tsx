@@ -8,6 +8,9 @@ interface BudgetContextType {
   transactions: Transaction[];
   addTransaction: (transaction: Transaction) => void;
   removeTransaction: (id: number) => void;
+  currentBudget: number;
+  setCurrentBudget: (currentBudget: number) => void;
+  getCurrentBudget: () => void;
 }
 
 export const BudgetContext = createContext({} as BudgetContextType);
@@ -19,6 +22,7 @@ interface BudgetProviderProps {
 export function BudgetProvider({ children }: BudgetProviderProps) {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [budget, setBudget] = useState(0);
+  const [currentBudget, setCurrentBudget] = useState(0);
 
   function removeTransaction(id: number) {
     setTransactions((prev) =>
@@ -40,6 +44,20 @@ export function BudgetProvider({ children }: BudgetProviderProps) {
     }
   }
 
+  function getCurrentBudget() {
+    const totalIncome = transactions
+      .filter((t) => t.type === "income")
+      .reduce((acc, t) => acc + t.amount, 0);
+
+    const totalExpenses = transactions
+      .filter((t) => t.type === "expense")
+      .reduce((acc, t) => acc + t.amount, 0);
+
+    const calculatedBudget = budget + totalIncome - totalExpenses;
+
+    setCurrentBudget(calculatedBudget);
+  }
+
   return (
     <BudgetContext.Provider
       value={{
@@ -48,6 +66,9 @@ export function BudgetProvider({ children }: BudgetProviderProps) {
         transactions,
         addTransaction,
         removeTransaction,
+        currentBudget,
+        setCurrentBudget,
+        getCurrentBudget,
       }}
     >
       {children}
