@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useState } from "react";
 import { Transaction } from "../types/transactions";
-import { addNewRowToSheet } from "../utils/sheets";
+import { addNewRowToSheet, removeRowFromSheet } from "../utils/sheets";
 
 interface BudgetContextType {
   budget: number;
@@ -48,6 +48,7 @@ export function BudgetProvider({ children }: BudgetProviderProps) {
 
     try {
       await addNewRowToSheet({
+        id: transaction.id,
         type: transaction.type,
         description: transaction.description,
         amount: transaction.amount,
