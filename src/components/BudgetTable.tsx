@@ -10,7 +10,7 @@ import {
 import { Trash2 } from "lucide-react";
 
 export function BudgetTable() {
-  const { transactions } = useBudgetContext();
+  const { transactions, handleRemoveTransaction } = useBudgetContext();
 
   return (
     <Table>
@@ -59,6 +59,7 @@ export function BudgetTable() {
                 <button
                   className="text-accent-foreground hover:bg-red-600 transition duration-300 rounded-md p-1 hover:text-accent cursor-pointer flex gap-1 items-center justify-center"
                   aria-label="Delete transaction"
+                  onClick={() => handleRemoveTransaction(transaction.id)}
                 >
                   <Trash2 size={16} />
                 </button>
