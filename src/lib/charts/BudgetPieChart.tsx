@@ -19,24 +19,32 @@ export function BudgetPieChart({ data }: BudgetPieChartProps) {
   }
 
   return (
-    <ResponsiveContainer className="max-w-2xl" height={300}>
-      <PieChart>
-        <Pie
-          data={filteredData}
-          dataKey="value"
-          nameKey="name"
-          cx="50%"
-          cy="50%"
-          outerRadius={80}
-          paddingAngle={5}
-          label
-        >
-          {filteredData.map((_, index: number) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-        <Tooltip />
-      </PieChart>
-    </ResponsiveContainer>
+    <div className="border border-border bg-muted rounded-md max-w-2xl">
+      <ResponsiveContainer height={300}>
+        <PieChart>
+          <Pie
+            data={filteredData}
+            dataKey="value"
+            nameKey="name"
+            cx="50%"
+            cy="50%"
+            outerRadius={80}
+            innerRadius={60}
+            paddingAngle={2}
+            label
+            isAnimationActive={true}
+          >
+            {filteredData.map((entry, index: number) => {
+              let fillColor = "#ccc";
+              if (entry.name === "Budget") fillColor = "#0088FE";
+              else if (entry.name === "Expense") fillColor = "#d31616";
+              else if (entry.name === "Income") fillColor = "#00da41";
+              return <Cell key={`cell-${index}`} fill={fillColor} />;
+            })}
+          </Pie>
+          <Tooltip />
+        </PieChart>
+      </ResponsiveContainer>
+    </div>
   );
 }
