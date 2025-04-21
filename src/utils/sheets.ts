@@ -18,7 +18,15 @@ export async function addNewRowToSheet(data: Transaction) {
 
 export async function removeRowFromSheet(id: number) {
   try {
-    const response = await api.delete(`/Transactions/id/${id}`, {
+    const queryParams = new URLSearchParams({
+      limit: "1",
+      query_type: "and",
+      id: String(id),
+    });
+
+    const url = `/Transactions?${queryParams.toString()}`;
+
+    const response = await api.delete(url, {
       headers: {
         "Content-Type": "application/json",
       },
