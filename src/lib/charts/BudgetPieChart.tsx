@@ -1,7 +1,4 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
-
-const COLORS = ["#0088FE", "#FF8042", "#00C49F"];
-
 interface PieChartData {
   name: string;
   value: number;
@@ -15,7 +12,13 @@ export function BudgetPieChart({ data }: BudgetPieChartProps) {
   const filteredData = data.filter((item) => item.value > 0);
 
   if (!filteredData || filteredData.length === 0) {
-    return <div>No data available</div>;
+    return (
+      <div className="border border-border bg-muted rounded-md max-w-2xl min-h-[300px] flex items-center justify-center">
+        <p className="text-accent-foreground opacity-50 font-semibold">
+          No data available
+        </p>
+      </div>
+    );
   }
 
   return (
