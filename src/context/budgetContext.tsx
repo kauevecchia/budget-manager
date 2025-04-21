@@ -11,6 +11,9 @@ interface BudgetContextType {
   currentBudget: number;
   setCurrentBudget: (currentBudget: number) => void;
   getCurrentBudget: () => void;
+  totalIncomes: number;
+  totalExpenses: number;
+  calculatedBudget: number;
 }
 
 export const BudgetContext = createContext({} as BudgetContextType);
@@ -23,6 +26,16 @@ export function BudgetProvider({ children }: BudgetProviderProps) {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [budget, setBudget] = useState(0);
   const [currentBudget, setCurrentBudget] = useState(0);
+
+  const totalIncomes = transactions
+    .filter((t) => t.type === "income")
+    .reduce((acc, t) => acc + t.amount, 0);
+
+  const totalExpenses = transactions
+    .filter((t) => t.type === "expense")
+    .reduce((acc, t) => acc + t.amount, 0);
+
+  const calculatedBudget = budget + totalIncomes - totalExpenses;
 
   function removeTransaction(id: number) {
     setTransactions((prev) =>
@@ -40,21 +53,11 @@ export function BudgetProvider({ children }: BudgetProviderProps) {
         amount: transaction.amount,
       });
     } catch (err) {
-      console.error("Erro ao adicionar transação na planilha:", err);
+      console.error("Error while adding transaction to the spreadsheet:", err);
     }
   }
 
   function getCurrentBudget() {
-    const totalIncome = transactions
-      .filter((t) => t.type === "income")
-      .reduce((acc, t) => acc + t.amount, 0);
-
-    const totalExpenses = transactions
-      .filter((t) => t.type === "expense")
-      .reduce((acc, t) => acc + t.amount, 0);
-
-    const calculatedBudget = budget + totalIncome - totalExpenses;
-
     setCurrentBudget(calculatedBudget);
   }
 
@@ -69,6 +72,9 @@ export function BudgetProvider({ children }: BudgetProviderProps) {
         currentBudget,
         setCurrentBudget,
         getCurrentBudget,
+        totalIncomes,
+        totalExpenses,
+        calculatedBudget,
       }}
     >
       {children}
