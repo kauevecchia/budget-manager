@@ -12,7 +12,9 @@ interface BudgetPieChartProps {
 }
 
 export function BudgetPieChart({ data }: BudgetPieChartProps) {
-  if (!data || data.length === 0) {
+  const filteredData = data.filter((item) => item.value > 0);
+
+  if (!filteredData || filteredData.length === 0) {
     return <div>No data available</div>;
   }
 
@@ -20,7 +22,7 @@ export function BudgetPieChart({ data }: BudgetPieChartProps) {
     <ResponsiveContainer className="max-w-2xl" height={300}>
       <PieChart>
         <Pie
-          data={data}
+          data={filteredData}
           dataKey="value"
           nameKey="name"
           cx="50%"
@@ -29,7 +31,7 @@ export function BudgetPieChart({ data }: BudgetPieChartProps) {
           paddingAngle={5}
           label
         >
-          {data.map((_, index: number) => (
+          {filteredData.map((_, index: number) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
