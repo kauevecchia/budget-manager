@@ -21,7 +21,12 @@ type TransactionFormInput = z.infer<typeof transactionFormSchema>;
 
 export function Transactions() {
   const { handleAddTransaction } = useBudgetContext();
-  const { control, handleSubmit, reset } = useForm<TransactionFormInput>({
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<TransactionFormInput>({
     resolver: zodResolver(transactionFormSchema),
   });
 
@@ -81,6 +86,9 @@ export function Transactions() {
               />
             )}
           />
+          {errors.description && (
+            <p className="text-red-600 text-sm">{errors.description.message}</p>
+          )}
         </div>
         <div className="flex flex-col gap-1">
           <Label htmlFor="amount">Amount</Label>
@@ -106,6 +114,9 @@ export function Transactions() {
               );
             }}
           />
+          {errors.amount && (
+            <p className="text-red-600 text-sm">{errors.amount.message}</p>
+          )}
         </div>
 
         <Button type="submit" className="max-w-48 cursor-pointer mt-2">
