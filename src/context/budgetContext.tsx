@@ -31,14 +31,14 @@ export function BudgetProvider({ children }: BudgetProviderProps) {
   }
 
   async function addTransaction(transaction: Transaction) {
+    setTransactions((prev) => [...prev, transaction]);
+
     try {
       await addNewRowToSheet({
         type: transaction.type,
         description: transaction.description,
         amount: transaction.amount,
       });
-
-      setTransactions((prev) => [...prev, transaction]);
     } catch (err) {
       console.error("Erro ao adicionar transação na planilha:", err);
     }
