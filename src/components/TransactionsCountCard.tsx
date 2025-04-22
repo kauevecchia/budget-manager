@@ -42,7 +42,7 @@ export function TransactionCountCard() {
             <p>
               You have{" "}
               <span className="text-green-600 font-semibold">
-                {((incomeCount / expenseCount) * 100).toFixed(0)}%
+                {((incomeCount / expenseCount) * 100 - 100).toFixed(0)}%
               </span>{" "}
               more income transactions than expenses.
             </p>
@@ -50,7 +50,7 @@ export function TransactionCountCard() {
             <p>
               You have{" "}
               <span className="text-red-600 font-semibold">
-                {((expenseCount / incomeCount) * 100).toFixed(0)}%
+                {((expenseCount / incomeCount) * 100 - 100).toFixed(0)}%
               </span>{" "}
               more expense transactions than incomes.
             </p>
