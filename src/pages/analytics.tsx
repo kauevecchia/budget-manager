@@ -1,3 +1,6 @@
+import { HighestTransactionCard } from "../components/HighestTransactionCard";
+import { TransactionAverageCard } from "../components/TransactionsAverageCard";
+import { TransactionCountCard } from "../components/TransactionsCountCard";
 import { useBudgetContext } from "../hooks/useBudgetContext";
 import { TinyBarChart } from "../lib/charts/BarChart";
 
@@ -19,7 +22,11 @@ export function Analytics() {
         </div>
         <div className="flex flex-col gap-4">
           <h2 className="text-xl font-semibold">Insights</h2>
-          <div className="grid grid-cols-3 gap-4"></div>
+          <div className="grid grid-cols-3 gap-4">
+            <TransactionAverageCard />
+            <TransactionCountCard />
+            <HighestTransactionCard />
+          </div>
         </div>
       </main>
     </div>
