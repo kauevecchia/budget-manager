@@ -3,6 +3,9 @@ import { useBudgetContext } from "../hooks/useBudgetContext";
 import { BudgetPieChart } from "../lib/charts/BudgetPieChart";
 import { BudgetTable } from "../components/BudgetTable";
 import { BudgetProgressBar } from "../components/BudgetProgressBar";
+import { Button } from "../components/ui/button";
+import { CirclePlus } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export function Dashboard() {
   const {
@@ -13,6 +16,8 @@ export function Dashboard() {
     totalIncomes,
     totalExpenses,
   } = useBudgetContext();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     handleGetCurrentBudget();
@@ -39,12 +44,21 @@ export function Dashboard() {
             <BudgetPieChart data={data} />
           </div>
           <div className="flex flex-col gap-4 flex-1">
-            <h2 className="text-xl font-semibold">Your transactions</h2>
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-semibold">Your transactions</h2>
+              <Button
+                className="cursor-pointer"
+                onClick={() => navigate("/transactions")}
+              >
+                <CirclePlus />
+                Add new transaction
+              </Button>
+            </div>
             <BudgetTable />
           </div>
         </main>
       </div>
-      <div className="md:max-w-2xl">
+      <div className="block md:hidden">
         <BudgetProgressBar />
       </div>
     </div>

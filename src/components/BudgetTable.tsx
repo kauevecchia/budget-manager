@@ -37,15 +37,15 @@ export function BudgetTable() {
               <TableCell
                 className={`whitespace-nowrap flex items-center justify-center ${
                   transaction.type === "expense"
-                    ? "text-red-700 font-semibold"
-                    : "text-green-700 font-semibold"
+                    ? "text-red-700 dark:text-red-800 font-semibold"
+                    : "text-green-700 dark:text-green-800 font-semibold"
                 }`}
               >
                 <p
                   className={
                     transaction.type === "expense"
-                      ? "bg-red-200 px-1.5 py-0.5 rounded-md"
-                      : "bg-green-200 px-1.5 py-0.5 rounded-md"
+                      ? "dark:bg-red-300 bg-red-200 px-1.5 py-0.5 rounded-md"
+                      : "dark:bg-green-300 bg-green-200 px-1.5 py-0.5 rounded-md"
                   }
                 >
                   {transaction.type}

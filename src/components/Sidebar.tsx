@@ -5,6 +5,7 @@ import {
   ChartNoAxesColumn,
 } from "lucide-react";
 import { SidebarItem } from "./SidebarItem";
+import { BudgetProgressBar } from "./BudgetProgressBar";
 
 export function Sidebar() {
   return (
@@ -29,8 +30,8 @@ export function Sidebar() {
           </SidebarItem>
         </ul>
       </nav>
-      <div>
-        <p className="text-xl font-bold">Teste</p>
+      <div className="hidden md:block md:text-left md:pr-12">
+        <BudgetProgressBar />
       </div>
     </div>
   );
