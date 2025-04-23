@@ -56,9 +56,10 @@ export function HighestTransactionCard() {
             <p>
               Your highest income is{" "}
               <span className="text-green-600 dark:text-green-500 font-semibold">
-                {((highestIncome.amount / highestExpense.amount) * 100).toFixed(
-                  0
-                )}
+                {(
+                  (highestIncome.amount / highestExpense.amount) * 100 -
+                  100
+                ).toFixed(2)}
                 %
               </span>{" "}
               higher than your highest expense.
@@ -67,9 +68,10 @@ export function HighestTransactionCard() {
             <p>
               Your highest expense is{" "}
               <span className="text-red-600 dark:text-red-500 font-semibold">
-                {((highestExpense.amount / highestIncome.amount) * 100).toFixed(
-                  0
-                )}
+                {(
+                  (highestExpense.amount / highestIncome.amount) * 100 -
+                  100
+                ).toFixed(2)}
                 %
               </span>{" "}
               higher than your highest income.
