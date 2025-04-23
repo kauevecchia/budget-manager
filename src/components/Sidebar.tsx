@@ -9,7 +9,7 @@ import { BudgetProgressBar } from "./BudgetProgressBar";
 
 export function Sidebar() {
   return (
-    <div className="hidden lg:flex flex-col h-4/6 flex-grow bg-background text-foreground p-4">
+    <div className="hidden lg:flex flex-col gap-96 flex-grow bg-background text-foreground p-4">
       <nav className="flex flex-col space-y-2 flex-grow">
         <ul className="flex flex-col gap-4">
           <SidebarItem to="/budget">
