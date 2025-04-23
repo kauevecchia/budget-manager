@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 import { useBudgetContext } from "../hooks/useBudgetContext";
 import {
   Table,
@@ -11,6 +12,16 @@ import { Trash2 } from "lucide-react";
 
 export function BudgetTable() {
   const { transactions, handleRemoveTransaction } = useBudgetContext();
+
+  const handleButtonClick = (id: number) => {
+    try {
+      handleRemoveTransaction(id);
+      toast.success("Transaction removed successfully!");
+    } catch (error) {
+      console.error("Error while removing transaction:", error);
+      toast.error("Error while removing transaction. Please try again later.");
+    }
+  };
 
   return (
     <Table>
@@ -59,7 +70,7 @@ export function BudgetTable() {
                 <button
                   className="text-accent-foreground hover:bg-red-600 transition duration-300 rounded-md p-1 hover:text-accent cursor-pointer flex gap-1 items-center justify-center"
                   aria-label="Delete transaction"
-                  onClick={() => handleRemoveTransaction(transaction.id)}
+                  onClick={() => handleButtonClick(transaction.id)}
                 >
                   <Trash2 size={16} />
                 </button>

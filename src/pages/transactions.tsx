@@ -16,6 +16,7 @@ import { transactionFormSchema } from "../schemas/transactionForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 type TransactionFormInput = z.infer<typeof transactionFormSchema>;
 
@@ -40,7 +41,13 @@ export function Transactions() {
       amount: data.amount,
     };
 
-    handleAddTransaction(newTransaction);
+    try {
+      handleAddTransaction(newTransaction);
+      toast.success("Transaction added successfully!");
+    } catch (error) {
+      console.error("Error while adding transaction:", error);
+      toast.error("Error while adding transaction. Please try again later.");
+    }
     navigate("/dashboard");
     reset();
   }

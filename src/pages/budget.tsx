@@ -10,6 +10,7 @@ import { formatCurrency, parseCurrency } from "../utils/currency";
 import { BudgetContext } from "../context/budgetContext";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 type BudgetFormInputs = z.infer<typeof budgetFormSchema>;
 
@@ -28,6 +29,7 @@ export function Budget() {
 
   function onSubmit(data: BudgetFormInputs) {
     setBudget(data.budget);
+    toast.success("Budget set successfully!");
     navigate("/transactions");
   }
 
