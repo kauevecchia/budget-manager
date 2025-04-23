@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import { Transaction } from "../types/transactions";
 import { addNewRowToSheet, removeRowFromSheet } from "../utils/sheets";
 
@@ -23,9 +23,18 @@ interface BudgetProviderProps {
 }
 
 export function BudgetProvider({ children }: BudgetProviderProps) {
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [budget, setBudget] = useState(0);
-  const [currentBudget, setCurrentBudget] = useState(0);
+  const [transactions, setTransactions] = useState<Transaction[]>(
+    JSON.parse(localStorage.getItem("transactions") || "[]")
+  );
+  const [budget, setBudget] = useState<number>(
+    JSON.parse(localStorage.getItem("budget") || "0")
+  );
+  const [currentBudget, setCurrentBudget] = useState<number>(0);
+
+  useEffect(() => {
+    localStorage.setItem("transactions", JSON.stringify(transactions));
+    localStorage.setItem("budget", JSON.stringify(budget));
+  }, [transactions, budget]);
 
   const totalIncomes = transactions
     .filter((t) => t.type === "income")
