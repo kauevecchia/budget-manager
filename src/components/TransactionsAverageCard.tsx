@@ -51,7 +51,7 @@ export function TransactionAverageCard() {
                 )}
                 %
               </span>{" "}
-              higher than your expenses
+              higher than your average expense value
             </p>
           ) : (
             <p>
@@ -62,7 +62,7 @@ export function TransactionAverageCard() {
                 )}
                 %
               </span>{" "}
-              higher than your incomes
+              higher than your average income value
             </p>
           )
         ) : (
