@@ -24,13 +24,13 @@ export function TransactionCountCard() {
         <ul>
           <li className="flex items-center gap-2">
             Income:
-            <span className="text-green-600 font-semibold text-xl">
+            <span className="text-green-600 dark:text-green-500 font-semibold text-xl">
               {incomeCount}
             </span>
           </li>
           <li className="flex items-center gap-2">
             Expense:
-            <span className="text-red-600 font-semibold text-xl">
+            <span className="text-red-600 dark:text-red-500 font-semibold text-xl">
               {expenseCount}
             </span>
           </li>
@@ -41,7 +41,7 @@ export function TransactionCountCard() {
           incomeCount > expenseCount ? (
             <p>
               You have{" "}
-              <span className="text-green-600 font-semibold">
+              <span className="text-green-600 dark:text-green-500 font-semibold">
                 {((incomeCount / expenseCount) * 100 - 100).toFixed(0)}%
               </span>{" "}
               more income transactions than expenses.
@@ -49,7 +49,7 @@ export function TransactionCountCard() {
           ) : (
             <p>
               You have{" "}
-              <span className="text-red-600 font-semibold">
+              <span className="text-red-600 dark:text-red-500 font-semibold">
                 {((expenseCount / incomeCount) * 100 - 100).toFixed(0)}%
               </span>{" "}
               more expense transactions than incomes.

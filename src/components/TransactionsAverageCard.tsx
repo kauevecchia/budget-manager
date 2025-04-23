@@ -28,13 +28,13 @@ export function TransactionAverageCard() {
         <ul>
           <li className="flex items-center gap-2">
             Income:
-            <span className="text-green-600 font-semibold text-xl">
+            <span className="text-green-600 dark:text-green-500 font-semibold text-xl">
               ${averageIncomesValue.toFixed(2)}
             </span>
           </li>
           <li className="flex items-center gap-2">
             Expense:
-            <span className="text-red-600 font-semibold text-xl">
+            <span className="text-red-600 dark:text-red-500 font-semibold text-xl">
               ${averageExpensesValue.toFixed(2)}
             </span>
           </li>
@@ -45,7 +45,7 @@ export function TransactionAverageCard() {
           averageIncomesValue > averageExpensesValue ? (
             <p>
               Your average incomes value is{" "}
-              <span className="text-green-600 font-semibold">
+              <span className="text-green-600 dark:text-green-500 font-semibold">
                 {((averageIncomesValue / averageExpensesValue) * 100).toFixed(
                   0
                 )}
@@ -56,7 +56,7 @@ export function TransactionAverageCard() {
           ) : (
             <p>
               Your average expenses value is{" "}
-              <span className="text-red-600 font-semibold">
+              <span className="text-red-600 dark:text-red-500 font-semibold">
                 {((averageExpensesValue / averageIncomesValue) * 100).toFixed(
                   0
                 )}
