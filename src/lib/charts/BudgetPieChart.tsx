@@ -13,7 +13,7 @@ export function BudgetPieChart({ data }: BudgetPieChartProps) {
 
   if (!filteredData || filteredData.length === 0) {
     return (
-      <div className="border border-border bg-muted rounded-md max-w-2xl min-h-[300px] flex items-center justify-center">
+      <div className="border border-border bg-muted rounded-md min-h-[300px] flex items-center justify-center">
         <p className="text-accent-foreground opacity-50 font-semibold">
           No data available
         </p>
@@ -22,7 +22,7 @@ export function BudgetPieChart({ data }: BudgetPieChartProps) {
   }
 
   return (
-    <div className="border border-border bg-muted rounded-md max-w-2xl">
+    <div className="border border-border bg-muted rounded-md">
       <ResponsiveContainer height={300}>
         <PieChart>
           <Pie

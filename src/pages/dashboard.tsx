@@ -33,32 +33,34 @@ export function Dashboard() {
   );
 
   return (
-    <div className="flex flex-col gap-48">
+    <div className="flex flex-col gap-24">
       <div className="flex flex-col gap-4">
         <div>
           <h1 className="text-2xl">Your current balance</h1>
           <p className="text-3xl font-semibold">${currentBudget.toFixed(2)}</p>
         </div>
-        <main className="flex gap-6 p-4">
+        <main className="flex flex-col md:flex-row gap-8 md:p-4">
           <div className="flex-1">
             <BudgetPieChart data={data} />
           </div>
           <div className="flex flex-col gap-4 flex-1">
             <div className="flex items-center justify-between">
-              <h2 className="text-xl font-semibold">Your transactions</h2>
+              <h2 className="text-base md:text-xl font-semibold">
+                Your transactions
+              </h2>
               <Button
-                className="cursor-pointer"
+                className="cursor-pointer w-[120px] flex gap-1.5 md:w-auto"
                 onClick={() => navigate("/transactions")}
               >
                 <CirclePlus />
-                Add new transaction
+                <span className="hidden md:inline">Add new</span>Transaction
               </Button>
             </div>
             <BudgetTable />
           </div>
         </main>
       </div>
-      <div className="block md:hidden">
+      <div className="block mx-auto md:hidden">
         <BudgetProgressBar />
       </div>
     </div>

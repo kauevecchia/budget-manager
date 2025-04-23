@@ -27,7 +27,9 @@ export function BudgetTable() {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Transaction Type</TableHead>
+          <TableHead>
+            <span className="hidden md:inline">Transaction</span> Type
+          </TableHead>
           <TableHead>Description</TableHead>
           <TableHead>Amount</TableHead>
         </TableRow>

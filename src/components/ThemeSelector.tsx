@@ -13,20 +13,20 @@ export function ThemeSelector() {
 
   return (
     <Select onValueChange={setTheme} defaultValue={theme}>
-      <SelectTrigger className="w-[150px]">
+      <SelectTrigger className="w-[70px] md:w-[150px]">
         <SelectValue placeholder="Select theme" />
       </SelectTrigger>
       <SelectContent>
         <SelectItem value="light">
-          Light
+          <p className="text-xs md:text-base hidden md:block">Light</p>
           <Sun />
         </SelectItem>
         <SelectItem value="dark">
-          Dark
+          <p className="text-xs md:text-base hidden md:block">Dark</p>
           <Moon />
         </SelectItem>
         <SelectItem value="system">
-          System
+          <p className="text-xs md:text-base hidden md:block">System</p>
           <Laptop />
         </SelectItem>
       </SelectContent>

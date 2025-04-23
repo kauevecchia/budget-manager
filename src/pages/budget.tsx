@@ -39,7 +39,7 @@ export function Budget() {
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-4 w-full md:w-1/2 p-4"
+        className="flex flex-col gap-4 w-full md:w-1/2 md:p-4"
       >
         <div className="flex flex-col gap-2">
           <Label htmlFor="budget">Set your current budget</Label>
@@ -71,7 +71,7 @@ export function Budget() {
           )}
         </div>
 
-        <Button className="cursor-pointer max-w-48 text-left">
+        <Button className="cursor-pointer w-full md:max-w-48 text-left">
           <DollarSign />
           Set budget
         </Button>

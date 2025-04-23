@@ -56,7 +56,7 @@ export function Transactions() {
     <div className="flex flex-col gap-6">
       <h1 className="text-3xl font-semibold">Transactions</h1>
       <form
-        className="flex flex-col gap-3 p-4 md:w-1/2"
+        className="flex flex-col gap-3 md:p-4 md:w-1/2"
         onSubmit={handleSubmit(handleOnSubmit)}
       >
         <div className="flex flex-col gap-1">
@@ -126,7 +126,10 @@ export function Transactions() {
           )}
         </div>
 
-        <Button type="submit" className="max-w-48 cursor-pointer mt-2">
+        <Button
+          type="submit"
+          className="w-full md:max-w-48 cursor-pointer mt-2"
+        >
           Submit
           <CircleArrowRight />
         </Button>
