@@ -46,9 +46,10 @@ export function TransactionAverageCard() {
             <p>
               Your average incomes value is{" "}
               <span className="text-green-600 dark:text-green-500 font-semibold">
-                {((averageIncomesValue / averageExpensesValue) * 100).toFixed(
-                  0
-                )}
+                {(
+                  (averageIncomesValue / averageExpensesValue) * 100 -
+                  100
+                ).toFixed(2)}
                 %
               </span>{" "}
               higher than your average expense value
@@ -57,9 +58,10 @@ export function TransactionAverageCard() {
             <p>
               Your average expenses value is{" "}
               <span className="text-red-600 dark:text-red-500 font-semibold">
-                {((averageExpensesValue / averageIncomesValue) * 100).toFixed(
-                  0
-                )}
+                {(
+                  (averageExpensesValue / averageIncomesValue) * 100 -
+                  100
+                ).toFixed(2)}
                 %
               </span>{" "}
               higher than your average income value
