@@ -34,10 +34,15 @@ export function useBudgetContext() {
     getCurrentBudget();
   };
 
+  const handleSignOut = () => {
+    setUserId("");
+  };
+
   return {
     budget,
     userId,
     setUserId,
+    handleSignOut,
     transactions,
     handleSetBudget,
     handleAddTransaction,
