@@ -6,10 +6,11 @@ import { useNavigate } from "react-router-dom";
 import { Banknote, PiggyBank, BarChart2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
+import { fetchUserData } from "../utils/sheets";
 
 export function Login() {
   const [displayError, setDisplayError] = useState(false);
-  const { setUserId } = useBudgetContext();
+  const { setUserId, setTransactions, setBudget } = useBudgetContext();
   const navigate = useNavigate();
 
   return (
@@ -54,13 +55,45 @@ export function Login() {
             size="large"
             shape="pill"
             text="continue_with"
-            onSuccess={(credentialResponse) => {
+            onSuccess={async (credentialResponse) => {
               const decoded = jwtDecode<{ sub: string }>(
                 credentialResponse.credential!
               );
-              setUserId(decoded.sub);
-              navigate("/budget");
-              toast.success("Logged in. Let's manage that budget!");
+              const userId = parseFloat(decoded.sub);
+
+              setUserId(userId);
+
+              try {
+                const { budget, transactions } = await fetchUserData(userId);
+
+                const latestBudget =
+                  Array.isArray(budget) && budget.length > 0
+                    ? Number(budget[0])
+                    : Number(budget);
+
+                if (!isNaN(latestBudget) && latestBudget > 0) {
+                  setBudget(latestBudget);
+                }
+
+                const validTransactions = Array.isArray(transactions)
+                  ? transactions.filter(
+                      (t) =>
+                        typeof t === "object" &&
+                        !Array.isArray(t) &&
+                        typeof t.amount === "number"
+                    )
+                  : [];
+
+                if (validTransactions.length > 0) {
+                  setTransactions(validTransactions);
+                }
+
+                toast.success("Logged in. Let's manage that budget!");
+                navigate("/budget");
+              } catch (error) {
+                toast.error("Failed to fetch your data. Try again.");
+                console.error("Error fetching user data:", error);
+              }
             }}
             onError={() => setDisplayError(true)}
           />
