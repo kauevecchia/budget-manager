@@ -22,7 +22,7 @@ import { motion } from "framer-motion";
 type TransactionFormInput = z.infer<typeof transactionFormSchema>;
 
 export function Transactions() {
-  const { handleAddTransaction } = useBudgetContext();
+  const { handleAddTransaction, userId } = useBudgetContext();
   const {
     control,
     handleSubmit,
@@ -36,6 +36,7 @@ export function Transactions() {
 
   function handleOnSubmit(data: TransactionFormInput) {
     const newTransaction = {
+      userId: userId,
       id: Date.now(),
       type: data.type,
       description: data.description,
