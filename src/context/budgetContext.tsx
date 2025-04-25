@@ -1,10 +1,16 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { Transaction } from "../types/transactions";
-import { addNewRowToSheet, removeRowFromSheet } from "../utils/sheets";
+import {
+  addBudgetToSheet,
+  addNewRowToSheet,
+  removeRowFromSheet,
+  storeBudgetInSheet,
+} from "../utils/sheets";
 
 interface BudgetContextType {
   budget: number;
   setBudget: (budget: number) => void;
+  storeBudget: (budget: number) => void;
   userId: string;
   setUserId: (userId: string) => void;
   transactions: Transaction[];
@@ -80,6 +86,19 @@ export function BudgetProvider({ children }: BudgetProviderProps) {
     }
   }
 
+  async function storeBudget(budget: number) {
+    setBudget(budget);
+
+    try {
+      await addBudgetToSheet({
+        userId: userId,
+        budget: budget,
+      });
+    } catch (err) {
+      console.error("Error while storing budget to the spreadsheet", err);
+    }
+  }
+
   function getCurrentBudget() {
     setCurrentBudget(calculatedBudget);
   }
@@ -89,6 +108,7 @@ export function BudgetProvider({ children }: BudgetProviderProps) {
       value={{
         budget,
         setBudget,
+        storeBudget,
         userId,
         setUserId,
         transactions,
