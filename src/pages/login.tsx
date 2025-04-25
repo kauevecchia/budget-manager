@@ -1,8 +1,17 @@
 import { GoogleLogin } from "@react-oauth/google";
+import { useState } from "react";
+import { useBudgetContext } from "../hooks/useBudgetContext";
+import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 import { Banknote, PiggyBank, BarChart2 } from "lucide-react";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
 
 export function Login() {
+  const [displayError, setDisplayError] = useState(false);
+  const { setUserId } = useBudgetContext();
+  const navigate = useNavigate();
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-100 to-slate-200 px-4">
       <motion.div
@@ -40,7 +49,24 @@ export function Login() {
         </div>
 
         <div className="flex flex-col items-center gap-2">
-          <GoogleLogin />
+          <GoogleLogin
+            theme="outline"
+            size="large"
+            shape="pill"
+            text="continue_with"
+            onSuccess={(credentialResponse) => {
+              const decoded = jwtDecode<{ sub: string }>(
+                credentialResponse.credential!
+              );
+              setUserId(decoded.sub);
+              navigate("/budget");
+              toast.success("Logged in. Let's manage that budget!");
+            }}
+            onError={() => setDisplayError(true)}
+          />
+          {displayError && (
+            <p className="text-red-600 text-sm">Login failed, try again</p>
+          )}
         </div>
       </motion.div>
     </div>
