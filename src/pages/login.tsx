@@ -62,6 +62,7 @@ export function Login() {
               const userId = parseFloat(decoded.sub);
 
               setUserId(userId);
+              localStorage.setItem("userId", userId.toString());
 
               try {
                 const { budget, transactions } = await fetchUserData(userId);

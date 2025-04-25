@@ -31,7 +31,10 @@ interface BudgetProviderProps {
 }
 
 export function BudgetProvider({ children }: BudgetProviderProps) {
-  const [userId, setUserId] = useState<number | null>(null);
+  const [userId, setUserId] = useState(() => {
+    const stored = localStorage.getItem("userId");
+    return stored ? parseFloat(stored) : null;
+  });
   const [transactions, setTransactions] = useState<Transaction[]>(
     JSON.parse(localStorage.getItem("transactions") || "[]")
   );

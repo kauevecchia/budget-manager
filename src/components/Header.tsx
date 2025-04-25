@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import { ThemeSelector } from "./ThemeSelector";
 import { MobileMenu } from "./MobileMenu";
@@ -7,6 +7,8 @@ import { toast } from "sonner";
 
 export function Header() {
   const { handleSignOut } = useBudgetContext();
+
+  const navigate = useNavigate();
 
   return (
     <header className="flex justify-between bg-background items-center p-6">
@@ -24,6 +26,8 @@ export function Header() {
           className="hidden lg:block bg-foreground cursor-pointer hover:bg-destructive transition duration-300"
           onClick={() => {
             handleSignOut();
+            localStorage.removeItem("userId");
+            navigate("/login");
             toast.success("See you next time!");
           }}
         >
