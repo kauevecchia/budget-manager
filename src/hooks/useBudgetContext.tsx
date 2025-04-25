@@ -5,7 +5,7 @@ import { Transaction } from "../types/transactions";
 export function useBudgetContext() {
   const {
     budget,
-    setBudget,
+    storeBudget,
     userId,
     setUserId,
     addTransaction,
@@ -26,8 +26,8 @@ export function useBudgetContext() {
     addTransaction(transaction);
   };
 
-  const handleSetBudget = (budget: number) => {
-    setBudget(budget);
+  const handleStoreBudget = (budget: number) => {
+    storeBudget(budget);
   };
 
   const handleGetCurrentBudget = () => {
@@ -44,7 +44,7 @@ export function useBudgetContext() {
     setUserId,
     handleSignOut,
     transactions,
-    handleSetBudget,
+    handleStoreBudget,
     handleAddTransaction,
     handleRemoveTransaction,
     handleGetCurrentBudget,
