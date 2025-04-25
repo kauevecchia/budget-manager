@@ -6,6 +6,8 @@ export function useBudgetContext() {
   const {
     budget,
     setBudget,
+    userId,
+    setUserId,
     addTransaction,
     removeTransaction,
     transactions,
@@ -34,6 +36,8 @@ export function useBudgetContext() {
 
   return {
     budget,
+    userId,
+    setUserId,
     transactions,
     handleSetBudget,
     handleAddTransaction,
