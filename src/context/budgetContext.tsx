@@ -4,16 +4,16 @@ import {
   addBudgetToSheet,
   addNewRowToSheet,
   removeRowFromSheet,
-  storeBudgetInSheet,
 } from "../utils/sheets";
 
 interface BudgetContextType {
   budget: number;
   setBudget: (budget: number) => void;
   storeBudget: (budget: number) => void;
-  userId: string;
-  setUserId: (userId: string) => void;
+  userId: number;
+  setUserId: (userId: number | null) => void;
   transactions: Transaction[];
+  setTransactions: (transactions: Transaction[]) => void;
   addTransaction: (transaction: Transaction) => void;
   removeTransaction: (id: number) => void;
   currentBudget: number;
@@ -31,7 +31,7 @@ interface BudgetProviderProps {
 }
 
 export function BudgetProvider({ children }: BudgetProviderProps) {
-  const [userId, setUserId] = useState<string>("");
+  const [userId, setUserId] = useState<number | null>(null);
   const [transactions, setTransactions] = useState<Transaction[]>(
     JSON.parse(localStorage.getItem("transactions") || "[]")
   );
@@ -75,7 +75,7 @@ export function BudgetProvider({ children }: BudgetProviderProps) {
 
     try {
       await addNewRowToSheet({
-        userId: userId,
+        userId: userId ?? 0,
         id: transaction.id,
         type: transaction.type,
         description: transaction.description,
@@ -91,7 +91,7 @@ export function BudgetProvider({ children }: BudgetProviderProps) {
 
     try {
       await addBudgetToSheet({
-        userId: userId,
+        userId: userId ?? 0,
         budget: budget,
       });
     } catch (err) {
@@ -109,9 +109,10 @@ export function BudgetProvider({ children }: BudgetProviderProps) {
         budget,
         setBudget,
         storeBudget,
-        userId,
+        userId: userId ?? 0,
         setUserId,
         transactions,
+        setTransactions,
         addTransaction,
         removeTransaction,
         currentBudget,
