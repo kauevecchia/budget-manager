@@ -23,7 +23,7 @@ export function Login() {
         className="p-8 w-full max-w-2xl bg-white rounded-xl shadow-lg flex flex-col items-center gap-6"
       >
         <div className="flex flex-col gap-2 items-center text-center">
-          <div className="flex items-center text-accent gap-2">
+          <div className="flex items-center text-black gap-2">
             <h1 className="text-3xl font-bold">Welcome to Budget Manager</h1>
             <Banknote className="hidden md:block" />
           </div>
