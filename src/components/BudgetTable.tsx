@@ -9,6 +9,17 @@ import {
   TableRow,
 } from "./ui/table";
 import { Trash2 } from "lucide-react";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogClose,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Button } from "./ui/button";
 
 export function BudgetTable() {
   const { transactions, handleRemoveTransaction } = useBudgetContext();
@@ -69,13 +80,40 @@ export function BudgetTable() {
               </TableCell>
               <TableCell>${transaction.amount.toFixed(2)}</TableCell>
               <TableCell>
-                <button
-                  className="text-accent-foreground hover:bg-red-600 transition duration-300 rounded-md p-1 hover:text-accent cursor-pointer flex gap-1 items-center justify-center"
-                  aria-label="Delete transaction"
-                  onClick={() => handleButtonClick(transaction.id)}
-                >
-                  <Trash2 size={16} />
-                </button>
+                <Dialog>
+                  <DialogTrigger>
+                    <button
+                      className="text-accent-foreground hover:bg-red-600 transition duration-300 rounded-md p-1 hover:text-accent cursor-pointer flex gap-1 items-center justify-center"
+                      aria-label="Delete transaction"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </DialogTrigger>
+
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Confirm Deletion</DialogTitle>
+                      <DialogDescription>
+                        Are you sure you want to delete this transaction? This
+                        action cannot be undone.
+                      </DialogDescription>
+                    </DialogHeader>
+
+                    <DialogFooter className="flex flex-col md:flex-row">
+                      <DialogClose asChild>
+                        <Button className="bg-foreground cursor-pointer flex-grow">
+                          Cancel
+                        </Button>
+                      </DialogClose>
+                      <Button
+                        className="bg-destructive hover:bg-rose-500 cursor-pointer flex-grow"
+                        onClick={() => handleButtonClick(transaction.id)}
+                      >
+                        Delete
+                      </Button>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
               </TableCell>
             </TableRow>
           ))

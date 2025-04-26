@@ -39,13 +39,13 @@ export function HighestTransactionCard() {
           <li className="flex items-center gap-2">
             Income:
             <span className="text-green-600 dark:text-green-500 font-semibold text-xl">
-              ${highestIncome ? highestIncome.amount.toFixed(2) : "N/A"}
+              ${highestIncome ? highestIncome.amount.toFixed(2) : "0.00"}
             </span>
           </li>
           <li className="flex items-center gap-2">
             Expense:
             <span className="text-red-600 dark:text-red-500 font-semibold text-xl">
-              ${highestExpense ? highestExpense.amount.toFixed(2) : "N/A"}
+              ${highestExpense ? highestExpense.amount.toFixed(2) : "0.00"}
             </span>
           </li>
         </ul>
