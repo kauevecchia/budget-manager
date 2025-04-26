@@ -7,16 +7,15 @@ import { budgetFormSchema } from "../schemas/budgetForm";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formatCurrency, parseCurrency } from "../utils/currency";
-import { BudgetContext } from "../context/budgetContext";
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
+import { useBudgetContext } from "../hooks/useBudgetContext";
 
 type BudgetFormInputs = z.infer<typeof budgetFormSchema>;
 
 export function Budget() {
-  const { setBudget } = useContext(BudgetContext);
+  const { handleStoreBudget } = useBudgetContext();
 
   const {
     control,
@@ -29,7 +28,7 @@ export function Budget() {
   const navigate = useNavigate();
 
   function onSubmit(data: BudgetFormInputs) {
-    setBudget(data.budget);
+    handleStoreBudget(data.budget);
     toast.success("Budget set successfully!");
     navigate("/transactions");
   }

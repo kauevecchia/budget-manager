@@ -6,11 +6,13 @@ export function useBudgetContext() {
   const {
     budget,
     setBudget,
+    storeBudget,
     userId,
     setUserId,
     addTransaction,
     removeTransaction,
     transactions,
+    setTransactions,
     getCurrentBudget,
     currentBudget,
     totalIncomes,
@@ -26,8 +28,8 @@ export function useBudgetContext() {
     addTransaction(transaction);
   };
 
-  const handleSetBudget = (budget: number) => {
-    setBudget(budget);
+  const handleStoreBudget = (budget: number) => {
+    storeBudget(budget);
   };
 
   const handleGetCurrentBudget = () => {
@@ -35,16 +37,18 @@ export function useBudgetContext() {
   };
 
   const handleSignOut = () => {
-    setUserId("");
+    setUserId(null);
   };
 
   return {
     budget,
+    setBudget,
     userId,
     setUserId,
     handleSignOut,
     transactions,
-    handleSetBudget,
+    setTransactions,
+    handleStoreBudget,
     handleAddTransaction,
     handleRemoveTransaction,
     handleGetCurrentBudget,

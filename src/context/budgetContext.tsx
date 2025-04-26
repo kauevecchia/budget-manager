@@ -1,13 +1,19 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { Transaction } from "../types/transactions";
-import { addNewRowToSheet, removeRowFromSheet } from "../utils/sheets";
+import {
+  addBudgetToSheet,
+  addNewRowToSheet,
+  removeRowFromSheet,
+} from "../utils/sheets";
 
 interface BudgetContextType {
   budget: number;
   setBudget: (budget: number) => void;
-  userId: string;
-  setUserId: (userId: string) => void;
+  storeBudget: (budget: number) => void;
+  userId: number;
+  setUserId: (userId: number | null) => void;
   transactions: Transaction[];
+  setTransactions: (transactions: Transaction[]) => void;
   addTransaction: (transaction: Transaction) => void;
   removeTransaction: (id: number) => void;
   currentBudget: number;
@@ -25,7 +31,10 @@ interface BudgetProviderProps {
 }
 
 export function BudgetProvider({ children }: BudgetProviderProps) {
-  const [userId, setUserId] = useState<string>("");
+  const [userId, setUserId] = useState(() => {
+    const stored = localStorage.getItem("userId");
+    return stored ? parseFloat(stored) : null;
+  });
   const [transactions, setTransactions] = useState<Transaction[]>(
     JSON.parse(localStorage.getItem("transactions") || "[]")
   );
@@ -69,7 +78,7 @@ export function BudgetProvider({ children }: BudgetProviderProps) {
 
     try {
       await addNewRowToSheet({
-        userId: userId,
+        userId: userId ?? 0,
         id: transaction.id,
         type: transaction.type,
         description: transaction.description,
@@ -77,6 +86,19 @@ export function BudgetProvider({ children }: BudgetProviderProps) {
       });
     } catch (err) {
       console.error("Error while adding transaction to the spreadsheet:", err);
+    }
+  }
+
+  async function storeBudget(budget: number) {
+    setBudget(budget);
+
+    try {
+      await addBudgetToSheet({
+        userId: userId ?? 0,
+        budget: budget,
+      });
+    } catch (err) {
+      console.error("Error while storing budget to the spreadsheet", err);
     }
   }
 
@@ -89,9 +111,11 @@ export function BudgetProvider({ children }: BudgetProviderProps) {
       value={{
         budget,
         setBudget,
-        userId,
+        storeBudget,
+        userId: userId ?? 0,
         setUserId,
         transactions,
+        setTransactions,
         addTransaction,
         removeTransaction,
         currentBudget,
