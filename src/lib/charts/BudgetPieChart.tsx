@@ -34,6 +34,7 @@ export function BudgetPieChart({ data }: BudgetPieChartProps) {
             outerRadius={80}
             innerRadius={60}
             paddingAngle={2}
+            strokeWidth={3}
             label
             isAnimationActive={true}
           >
@@ -42,7 +43,13 @@ export function BudgetPieChart({ data }: BudgetPieChartProps) {
               if (entry.name === "Budget") fillColor = "#0088FE";
               else if (entry.name === "Expense") fillColor = "#d31616";
               else if (entry.name === "Income") fillColor = "#00da41";
-              return <Cell key={`cell-${index}`} fill={fillColor} />;
+              return (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={fillColor}
+                  className="stroke-muted"
+                />
+              );
             })}
           </Pie>
           <Tooltip />
